@@ -2,6 +2,7 @@ asgiref==3.8.1
 cachetools==5.5.2
 certifi==2025.4.26
 charset-normalizer==3.4.1
+dj-database-url==2.3.0
 Django==4.2.20
 google-auth==2.39.0
 google-auth-oauthlib==1.2.2
@@ -16,4 +17,5 @@ requests==2.32.3
 requests-oauthlib==2.0.0
 rsa==4.9.1
 sqlparse==0.5.3
+typing_extensions==4.13.2
 urllib3==2.4.0
