@@ -5,12 +5,10 @@ from django.contrib.auth.models import User
 STATUS = ((0, "Draft"), (1, "Published"))
 
 
-class Post(models.Model):
-    title = models.CharField(max_length=200, unique=True)
-    slug = models.SlugField(max_length=200, unique=True)
-    author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="blog_posts"
-    )
-    content = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    status = models.IntegerField(choices=STATUS, default=0)
+class Cottage(models.Model):
+    id = models.CharField(primary_key=True, unique=True, max_length=2)
+    sq_ft = models.IntegerField()
+    clean = models.DateField(ForeignKey=True, on_delete=models.CASCADE)
+    water_filter = models.IntegerField()
+    water_filter_replace = models.DateField()
+    fireplace = models.IntegerField()
