@@ -7,7 +7,7 @@ STATUS = ((0, "Draft"), (1, "Published"))
 class Cottage(models.Model):
     id = models.CharField(primary_key=True, max_length=10)
     sq_ft = models.IntegerField()
-    clean = models.ForeignKey('Reservation', on_delete=models.SET_NULL, null=True, blank=True, related_name='clean_cottages')
+    clean_date = models.ForeignKey('Reservation', on_delete=models.SET_NULL, null=True, blank=True, related_name='clean_cottages')
     water_filter = models.IntegerField(default=False)
     water_filter_replace = models.DateField()
     fireplace = models.IntegerField(default=False)
