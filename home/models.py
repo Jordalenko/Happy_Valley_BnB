@@ -8,9 +8,9 @@ class Cottage(models.Model):
     id = models.CharField(primary_key=True, max_length=10)
     sq_ft = models.IntegerField()
     clean = models.ForeignKey('Reservation', on_delete=models.SET_NULL, null=True, blank=True, related_name='clean_cottages')
-    water_filter = models.BooleanField(default=False)
+    water_filter = models.IntegerField(default=False)
     water_filter_replace = models.DateField()
-    fireplace = models.BooleanField(default=False)
+    fireplace = models.IntegerField(default=False)
 
     def __str__(self):
         return f"Cottage {self.id}"
