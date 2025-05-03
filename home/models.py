@@ -37,6 +37,9 @@ class Guest(models.Model):
     credit_card = models.IntegerField(null=True, blank=True)
     discount = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f"Guest {self.guest.name}: {self.guest_id}"
+
 
 # This is the reservation model
 class Reservation(models.Model):
