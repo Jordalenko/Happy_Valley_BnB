@@ -96,7 +96,7 @@ class Complete(models.Model):
     )
     discount = models.IntegerField(default=0)
     res_id = models.ForeignKey(
-        'Guest', on_delete=models.CASCADE, related_name="reserver", null=True, 
+        'Reservation', on_delete=models.CASCADE, related_name="reserver", null=True, 
         blank=True
     )
 
