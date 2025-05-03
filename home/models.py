@@ -46,6 +46,7 @@ class Reservation(models.Model):
         related_name="reservation_discounts",
         default=5
         )
+    created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.cottage.id}: {self.start} → {self.end}"
@@ -70,18 +71,13 @@ class Complete(models.Model):
 
 
 class Guest(models.Model):
-    guest_id = models.IntegerField(
-        primary_key=True, max_length=8, null=False, default="00000000"
-        )
+    guest_id = models.AutoField(primary_key=True)
     name = models.TextField()
     address = models.TextField()
     email = models.TextField()
     bank = models.IntegerField()
     credit_card = models.IntegerField()
-    discount = models.ForeignKey(
-        Guest, on_delete=models.CASCADE,
-        related_name="guest_discount", default=5
-        )
+    discount = models.IntegerField(default=0)
 
 
 # This is the string representation of the completed bookings
