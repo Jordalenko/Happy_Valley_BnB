@@ -43,6 +43,7 @@ class Guest(models.Model):
 
 # This is the reservation model
 class Reservation(models.Model):
+    res_id = models.AutoField(primary_key=True)
     cottage = models.ForeignKey(
         Cottage,
         on_delete=models.CASCADE,
@@ -58,7 +59,7 @@ class Reservation(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Cottage {self.cottage.cottage_id}: {self.start} → {self.end}"
+        return f"Cottage {self.cottage.cottage_id}: {self.start} → {self.end} by {self.guest_id} # {self.res_id}"
 
     class Meta:
         ordering = ["-created_on"]
