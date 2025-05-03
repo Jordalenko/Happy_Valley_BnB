@@ -14,10 +14,10 @@ class Cottage(models.Model):
         default="A"
     )
     sq_ft = models.IntegerField()
-    clean_date = models.ForeignKey(
-        'Reservation', on_delete=models.SET_NULL, null=True, blank=True,
-        related_name='clean_date'
-    )
+    # clean_date = models.ForeignKey(
+    #     'Reservation', on_delete=models.SET_NULL, null=True, blank=True,
+    #     related_name='clean_date'
+    # )
     water_filter = models.IntegerField(null=True, blank=True)
     water_filter_replace = models.DateField(null=True, blank=True)
     fireplace = models.IntegerField(null=True, blank=True)
