@@ -43,7 +43,7 @@ class Guest(models.Model):
 
 # This is the reservation model
 class Reservation(models.Model):
-    res_id = models.AutoField(primary_key=True)
+    res_id = models.IntegerField(null=True, unique=True)
     cottage = models.ForeignKey(
         Cottage,
         on_delete=models.CASCADE,
