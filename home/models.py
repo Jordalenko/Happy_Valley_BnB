@@ -33,8 +33,8 @@ class Guest(models.Model):
     name = models.TextField()
     address = models.TextField()
     email = models.TextField()
-    bank = models.IntegerField()
-    credit_card = models.IntegerField()
+    bank = models.IntegerField(null=True, blank=True)
+    credit_card = models.IntegerField(null=True, blank=True)
     discount = models.IntegerField(default=0)
 
 
