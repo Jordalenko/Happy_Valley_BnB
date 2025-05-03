@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 # Create your models here.
 STATUS = ((0, "Draft"), (1, "Reserved"))
@@ -43,7 +44,12 @@ class Guest(models.Model):
 
 # This is the reservation model
 class Reservation(models.Model):
-    res_id = models.IntegerField(null=True, unique=True)
+    res_id = models.CharField(
+        primary_key=True,
+        unique=True,
+        max_length=20,
+        editable=False
+    )
     cottage = models.ForeignKey(
         Cottage,
         on_delete=models.CASCADE,
@@ -52,7 +58,7 @@ class Reservation(models.Model):
     start = models.DateField()
     end = models.DateField()
     guest_id = models.ForeignKey(
-        'Guest', on_delete=models.CASCADE, related_name="reserver", null=True, 
+        'Guest', on_delete=models.CASCADE, related_name="reservations", null=True, 
         blank=True
     )
     discount = models.IntegerField(default=0)
@@ -61,6 +67,17 @@ class Reservation(models.Model):
     def __str__(self):
         return f"Cottage {self.cottage.cottage_id}: {self.start} → {self.end} by {self.guest_id} # {self.res_id}"
 
+    def save(self, *args, **kwargs):
+        if not self.res_id:
+            year = now().year
+            last = Reservation.objects.filter(res_id__startswith=str(year)).order_by('-res_id').first()
+            if last:
+                last_number = int(last.res_id[-4:])
+                new_number = last_number + 1
+            else:
+                new_number = 1
+            self.res_id = f"{year}{new_number:04d}"
+        super().save(*args, **kwargs)
     class Meta:
         ordering = ["-created_on"]
     
@@ -75,6 +92,13 @@ class Complete(models.Model):
     end = models.DateField()
     guest_id = models.ForeignKey(
         'Guest', on_delete=models.CASCADE,
-        related_name="user_completed", null=True, blank=True
+        related_name="completed_reservations", null=True, blank=True
     )
     discount = models.IntegerField(default=0)
+    res_id = models.ForeignKey(
+        'Guest', on_delete=models.CASCADE, related_name="reserver", null=True, 
+        blank=True
+    )
+
+    def __str__(self):
+        return f"Cottage {self.cottage.cottage_id}: {self.start} → {self.end} by {self.guest_id} # {self.res_id}"
