@@ -63,11 +63,15 @@ class Reservation(models.Model):
     )
     discount = models.IntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
+    is_complete = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Cottage {self.cottage.cottage_id}: {self.start} → {self.end} by {self.guest_id} # {self.res_id}"
 
     def save(self, *args, **kwargs):
+        creating = not self.pk  # Check if this is a new instance (optional)
+
+    # Generate a unique reservation ID if not set
         if not self.res_id:
             year = now().year
             last = Reservation.objects.filter(res_id__startswith=str(year)).order_by('-res_id').first()
@@ -77,7 +81,20 @@ class Reservation(models.Model):
             else:
                 new_number = 1
             self.res_id = f"{year}{new_number:04d}"
+
+        # Save the reservation
         super().save(*args, **kwargs)
+
+        # If reservation is marked complete, move it to the Complete model if not already there
+        if getattr(self, "is_complete", False) and not Complete.objects.filter(res_id=self).exists():
+            Complete.objects.create(
+                cottage=self.cottage,
+                start=self.start,
+                end=self.end,
+                guest_id=self.guest_id,
+                discount=self.discount,
+                res_id=self
+            )
     class Meta:
         ordering = ["-created_on"]
     
