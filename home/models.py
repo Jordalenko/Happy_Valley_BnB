@@ -116,6 +116,3 @@ class Complete(models.Model):
         'Reservation', on_delete=models.CASCADE, related_name="reserver", null=True, 
         blank=True
     )
-
-    def __str__(self):
-        return f"Cottage {self.cottage.cottage_id}: {self.start} → {self.end} by {self.guest_id} # {self.res_id}"
