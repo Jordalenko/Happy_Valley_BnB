@@ -116,3 +116,6 @@ class Complete(models.Model):
         'Reservation', on_delete=models.CASCADE, related_name="reserver", null=True, 
         blank=True
     )
+
+    def __str__(self):
+        return f"{self.res_id}"
