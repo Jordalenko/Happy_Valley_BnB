@@ -68,8 +68,8 @@ class Reservation(models.Model):
     def __str__(self):
         return f"Cottage {self.cottage.cottage_id}: {self.start} → {self.end} by {self.guest_id} | Res # {self.res_id}"
 
-    # def save(self, *args, **kwargs):
-    #     creating = not self.pk  # Check if this is a new instance
+    def save(self, *args, **kwargs):
+        creating = not self.pk  # Check if this is a new instance
 
     # Generate a unique reservation ID if not set
         if not self.res_id:
@@ -95,8 +95,8 @@ class Reservation(models.Model):
                 discount=self.discount,
                 res_id=self
             )
-    class Meta:
-        ordering = ["-created_on"]
+class Meta:
+    ordering = ["-created_on"]
     
 
 # This is the completed bookings model
