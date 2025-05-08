@@ -64,6 +64,7 @@ class Reservation(models.Model):
     discount = models.IntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
     is_complete = models.BooleanField(default=False)
+    note = models.TextField(null=True, max_length=200, blank=True)
 
     def __str__(self):
         return f"Cottage {self.cottage.cottage_id}: {self.start} → {self.end} by {self.guest_id} | Res # {self.res_id}"
