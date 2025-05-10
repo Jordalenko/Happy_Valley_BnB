@@ -67,7 +67,7 @@ class Reservation(models.Model):
     note = models.TextField(null=True, max_length=200, blank=True)
 
     def __str__(self):
-        return f"Cottage {self.cottage.cottage_id}: {self.start} → {self.end} by {self.guest_id} | Res # {self.res_id}"
+        return f"Res # {self.res_id} Cottage: {self.cottage} Start: {self.start} End: {self.end} Guest: {self.guest_id}"
 
     def save(self, *args, **kwargs):
         creating = not self.pk  # Check if this is a new instance
@@ -118,6 +118,7 @@ class Complete(models.Model):
         'Reservation', on_delete=models.CASCADE, related_name="reserver", null=True, 
         blank=True
     )
+    note = models.TextField()
 
     def __str__(self):
         return f"{self.res_id}"
