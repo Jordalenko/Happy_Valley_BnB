@@ -94,7 +94,8 @@ class Reservation(models.Model):
                 end=self.end,
                 guest_id=self.guest_id,
                 discount=self.discount,
-                res_id=self
+                res_id=self,
+                note=self.note
             )
 class Meta:
     ordering = ["-created_on"]
